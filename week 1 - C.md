@@ -65,9 +65,9 @@ echo $?
 ```
 
 U can use other word instant 0 too and if return same MEAN program run successfully no error. probably can help in debugging too.  BUT u can't write like `09` error `90` or `9` is OK!!
-
-`\n` -> For next line.
-`\r` -> move cursue to left
+ 
+ `\n` → newline (goes to next line)
+ `\r` → carriage return (goes to start of same line)
 `\"` -> escape char to print `"`
 `\'` -> escape char to print `'`
 `\\` -> escape char to print `\`
@@ -84,6 +84,11 @@ int main(void) {
     return 0;
 }
 ```
+Easy way to take input :
+```c
+
+```
+
 
 `%d` -> input INT. So on !! 
 ```
@@ -169,4 +174,203 @@ else{
 }
 
 }
+```
+
+# Loops
+### For loop
+```c
+#include <stdio.h>
+
+int main() {
+    
+    // Loop to print numbers from 1 to 5
+    for (int i = 0; i < 5; i++) {
+        printf( "%d ", i + 1);
+    }
+    
+    return 0;
+}
+```
+
+### While loop
+```c
+#include <stdio.h>
+int main() {
+    
+  // Initialization expression
+  int i = 0; 
+ 
+  // Test expression
+  while(i <= 5) {
+    printf("%d ", i + 1);   
+    
+    // update expression
+    i++;
+  } 
+  
+  return 0;
+}
+```
+
+### Do while loop
+```c
+#include <stdio.h>
+ 
+int main() {
+    
+  // Initialization expression
+  int i = 0; 
+  
+  do
+  {
+    // loop body
+    printf( "%d ", i);   
+ 
+    // Update expression
+    i++;
+    
+    // Condition to check
+  }  while (i <= 10);   
+  
+  return 0;
+}
+```
+
+## Infinite Loop using all 3 loops
+```c
+// for loop 
+
+for ( ; ; ) {
+		printf("This loop will run forever.");
+	}
+
+// while loop
+while (1)
+		printf("This loop will run forever.\n");
+		
+
+// do-while loop
+do {
+		printf("This loop will run forever.");
+	} while (1);
+```
+## Break 
+
+```c
+#include <stdio.h>
+
+int main() {
+    for(int i = 1; i <= 10; i++) {
+        if(i == 6) {
+            break;   // loop stops when i becomes 6
+        }
+        printf("%d ", i);
+    }
+    return 0;
+}
+```
+
+## Break with Nested Loops 
+
+```c
+#include <stdio.h>
+
+int main() {
+    for (int i = 0; i < 5; i++) {
+        for (int j = 1; j <= 10; j++) {
+            if (j > 3)
+                break;
+            else
+                printf("*");
+        }
+        printf("\n");
+    }
+    return 0;
+}
+```
+
+## Continue
+```c
+#include <stdio.h>
+
+int main() {
+    for (int i = 1; i <= 10; i++) {
+        if (i == 6) {
+            continue;   // skip when i is 6
+        }
+        printf("%d ", i);
+    }
+    return 0;
+}
+```
+
+# Functions
+```c
+// Abstraction
+
+#include <stdio.h>
+
+void meow(void); // prototype [meow fun is at bootom but it still works due to this line.]
+
+int main(void)
+{
+    for (int i = 0; i < 3; i++)
+    {
+        meow();
+    }
+}
+
+// Meow once
+void meow(void)
+{
+    printf("meow\n");
+}
+```
+- The initial `void` means that the function does not return any values. The `(void)` means that no values are being provided to the function.
+- `void meow(void);`  prototype meow fun is at bootom but it still works due to this line.
+
+# Boring plan case:
+Boring plan using `int` software that after can't store value after 4M so it gonna overflow integer and crash .
+Solution : use `long int` or `long long`
+**Pro-Tip:** Before you swap the types, do a "Find and Replace" carefully. Changing a variable from `int` to `long long` might also require you to update your print statements (e.g., changing `%d` to `%lld` in C).
+**EASY SOLUTION:**
+reboot the system it start from 0.
+
+# calendar overflow
+computer user 32bit integer to track time , 1st JAN 1917 when pc starts. so at 19 JAN 2038 we will overflow 32bit counter . 
+Result in crash or more probably data change to 13 DEC 1901.
+
+# GUI program
+U can use `gtk`
+` sudo apt install libgtk-3-dev`
+
+```c
+#include <gtk/gtk.h>
+
+static void activate(GtkApplication *app, gpointer user_data) {
+    GtkWidget *window;
+
+    window = gtk_application_window_new(app);
+    gtk_window_set_title(GTK_WINDOW(window), "My First GUI");
+    gtk_window_set_default_size(GTK_WINDOW(window), 300, 200);
+
+    gtk_widget_show_all(window);
+}
+
+int main(int argc, char **argv) {
+    GtkApplication *app;
+    int status;
+
+    app = gtk_application_new("com.example.gui", G_APPLICATION_FLAGS_NONE);
+    g_signal_connect(app, "activate", G_CALLBACK(activate), NULL);
+
+    status = g_application_run(G_APPLICATION(app), argc, argv);
+
+    g_object_unref(app);
+    return status;
+}
+```
+
+```bash
+gcc app.c `pkg-config --cflags --libs gtk+-3.0` -o app
 ```
