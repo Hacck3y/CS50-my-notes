@@ -84,10 +84,6 @@ int main(void) {
     return 0;
 }
 ```
-Easy way to take input :
-```c
-
-```
 
 
 `%d` -> input INT. So on !! 
@@ -109,6 +105,30 @@ Easy way to take input :
 First declare it . `int x;`   `scanf("%d", &x);`
 `&x` -> address of variable (mandatory) so input value can store on it.
 
+- If user enters a valid integer (like `5`)  
+    → `scanf` successfully reads **1 value**  
+    → returns **1**
+- If user enters invalid input (like `abc`)  
+    → `scanf` reads **0 values**  
+    → returns **0**
+
+| Input  | What happens | `scanf` return |
+| ------ | ------------ | -------------- |
+| `10`   | valid int    | 1              |
+| `-3`   | valid int    | 1              |
+| `abc`  | invalid      | 0              |
+| `5abc` | reads `5`    | 1              |
+it all used in to detect if input is int or sring
+```c
+
+// this detect if input if number or not.
+if (scanf("%d", &num) != 1)
+        {
+            printf("Enter number only\n");
+
+            break; // exit loop on invalid input
+        }
+```
 ## Types
 There are many data types that are available within C:
 ```bash
